@@ -7,6 +7,12 @@
     <router-view/>
   </div>
 </template>
+<script lang="js">
+import Vue from 'vue'
+import axios from 'axios'
+export default Vue.extend({
+})
+</script>
 
 <style lang="scss">
 #app {

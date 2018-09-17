@@ -15,15 +15,16 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vue from 'vue';
+import axios from 'axios'
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import GmapCluster from 'vue2-google-maps/dist/components/cluster' // replace src with dist if you have Babel issues
 Vue.component('GmapCluster', GmapCluster)
 import * as VueGoogleMaps from 'vue2-google-maps';
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBzlLYISGjL_ovJwAehh6ydhB56fCCpPQw',
+    key: 'AIzaSyCtsOk0uU5L9qaB7usCiLVHgWGuyAqWOCA',
     libraries: 'places', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
@@ -51,6 +52,28 @@ export default Vue.extend({
   components: {
     HelloWorld,
   },
+  methods: {
+    async sdfasfasfasf(){
+       let res = await axios.get('http://192.168.1.197/ServicesAPI/getServices?typeQuery=5');
+       console.log(res)
+       let services = res.data.services
+       for(let {points} of services){
+         for(let {latitude, longitude} of points){
+           
+           this.markers.push({
+             position: {
+              lat: Number(latitude),
+              lng: Number(longitude)
+              }
+            })
+         }
+       }
+       
+    }
+  },
+  created() {
+    this.sdfasfasfasf();
+  },
   mounted () {
     // At this point, the child GmapMap has been mounted, but
     // its map has not been initialized.
@@ -66,17 +89,7 @@ export default Vue.extend({
             lat: 10.0,
             lng: 10.0
           },
-          markers: [{
-            position: {
-              lat: 10.0,
-              lng: 10.0
-            }
-          }, {
-            position: {
-              lat: 11.0,
-              lng: 11.0
-            }
-          }]
+          markers: []
     }
   }
 });
